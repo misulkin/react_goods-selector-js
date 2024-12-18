@@ -16,39 +16,32 @@ export const goods = [
 ];
 
 export const App = () => {
-  const [selectedGoods, setSelectedGoods] = useState(['Jam']);
+  const [selectedGood, setSelectedGood] = useState('Jam');
 
   const addGood = good => {
-    if (!selectedGoods.includes(good)) {
-      setSelectedGoods([...selectedGoods, good]);
-    }
+    setSelectedGood(good);
   };
 
-  const removeGood = good => {
-    setSelectedGoods(selectedGoods.filter(item => item !== good));
+  const removeGood = () => {
+    setSelectedGood('');
   };
 
   return (
     <main className="section container">
-      {selectedGoods.length === 0 ? (
+      {selectedGood.length === 0 ? (
         <h1 className="title is-flex is-align-items-center">
           No goods selected
         </h1>
       ) : (
-        selectedGoods.map(selectedGood => (
-          <h1
-            key={selectedGood}
-            className="title is-flex is-align-items-center"
-          >
-            {selectedGood} is selected
-            <button
-              data-cy="ClearButton"
-              type="button"
-              className="delete ml-3"
-              onClick={() => removeGood(selectedGood)}
-            />
-          </h1>
-        ))
+        <h1 key={selectedGood} className="title is-flex is-align-items-center">
+          {selectedGood} is selected
+          <button
+            data-cy="ClearButton"
+            type="button"
+            className="delete ml-3"
+            onClick={() => removeGood()}
+          />
+        </h1>
       )}
       <table className="table">
         <tbody>
@@ -57,13 +50,11 @@ export const App = () => {
               key={good}
               data-cy="Good"
               className={
-                selectedGoods.includes(good)
-                  ? 'has-background-success-light'
-                  : ''
+                selectedGood === good ? 'has-background-success-light' : ''
               }
             >
               <td>
-                {selectedGoods.includes(good) ? (
+                {selectedGood === good ? (
                   <button
                     data-cy="RemoveButton"
                     type="button"
